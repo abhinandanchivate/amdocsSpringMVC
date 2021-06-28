@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DBUtils {
 
-	static final String DBURL="jdbc://mysql://localhost/empms";
+	static final String DBURL="jdbc:mysql://localhost/empms";
 	static final String userName="root";
 	static final String password ="root";
 
@@ -21,12 +21,16 @@ public class DBUtils {
 		PreparedStatement preparedStatement = null;
 		
 		try {
-			connection = DriverManager.getConnection(DBURL);
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection(DBURL,userName,password);
 //			// to establish the physical connection with DB.
 //			preparedStatement = connection.prepareStatement(	);
 //			preparedStatement.setString(1, x);
 			return connection;
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

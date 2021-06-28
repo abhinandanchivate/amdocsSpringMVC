@@ -20,12 +20,20 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	public String addEmployee(Employee employee) {
 		// TODO Auto-generated method stub
 		Connection connection = dbUtils.getConnection();
+		try {
+			connection.setAutoCommit(false);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		PreparedStatement preparedStatement = null;
 		try {
 			 preparedStatement = connection.prepareStatement("insert into employee (empid, firstname, lastname) values(?,?,?)");
 			 preparedStatement.setString(1, employee.getEmpId());
 			 preparedStatement.setString(2, employee.getFirstName());
 			 preparedStatement.setString(3, employee.getLastName());
+			 preparedStatement.executeUpdate();
+			 connection.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
